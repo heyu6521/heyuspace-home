@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="何欲的个人空间入口：博客、笔记、VPS dashboard、状态页和小工具。" />
+  <title>何欲 · Heyu Space</title>
+  <style>
+    :root {
+      --bg: #f7f3ea;
+      --card: rgba(255, 255, 255, 0.76);
+      --card-strong: rgba(255, 255, 255, 0.94);
+      --text: #1f2933;
+      --muted: #657184;
+      --line: rgba(31, 41, 51, 0.12);
+      --shadow: 0 24px 80px rgba(38, 45, 56, 0.11);
+      --accent: #111827;
+      --accent-soft: #e9dfcd;
+      --green: #177245;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 8% 6%, rgba(255, 226, 147, 0.62), transparent 32%),
+        radial-gradient(circle at 90% 16%, rgba(198, 223, 255, 0.66), transparent 34%),
+        radial-gradient(circle at 72% 88%, rgba(209, 244, 221, 0.55), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(1080px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 34px 0 56px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 7px rgba(17, 24, 39, 0.08);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      border-bottom-color: currentColor;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      align-items: end;
+      gap: 48px;
+      margin-bottom: 44px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 14px;
+      font-size: clamp(56px, 12vw, 132px);
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+    }
+
+    .quote {
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 750;
+      letter-spacing: -0.04em;
+    }
+
+    .desc {
+      max-width: 680px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .side-note {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .side-note strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .side-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 42px 0 16px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .section-title span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--card);
+      box-shadow: 0 10px 38px rgba(38, 45, 56, 0.06);
+      text-decoration: none;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      backdrop-filter: blur(14px);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(17, 24, 39, 0.26);
+      background: var(--card-strong);
+      box-shadow: 0 18px 54px rgba(38, 45, 56, 0.12);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .card strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 3px 9px;
+      background: var(--accent-soft);
+      color: #6f5937;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .tag.live {
+      background: rgba(23, 114, 69, 0.11);
+      color: var(--green);
+    }
+
+    .description {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 44px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      border-bottom: 1px solid rgba(101, 113, 132, 0.45);
+    }
+
+    @media (max-width: 860px) {
+      .nav { margin-bottom: 52px; }
+      .hero { grid-template-columns: 1fr; gap: 26px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 620px) {
+      .page { width: min(100% - 28px, 1080px); padding-top: 24px; }
+      .nav { align-items: flex-start; flex-direction: column; gap: 12px; }
+      .nav-links { flex-wrap: wrap; }
+      .grid { grid-template-columns: 1fr; }
+      .card { min-height: 148px; }
+      .footer { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="nav" aria-label="主导航">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span> Heyu Space</div>
+      <div class="nav-links">
+        <a href="#sites">Sites</a>
+        <a href="https://blog.heyuspace.com">Blog</a>
+        <a href="https://dash.heyuspace.com">Dashboard</a>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Personal space / tiny infra</div>
+          <h1>何欲</h1>
+          <p class="quote">胡为乎遑遑欲何之。</p>
+          <p class="desc">
+            这里是我的个人空间。用来放一些笔记、工具、VPS 实验、服务状态和长期折腾记录。
+            “何欲”是一个提醒：在匆忙之前，先问自己到底想要什么。
+          </p>
+        </div>
+        <aside class="side-note">
+          <strong>heyuspace.com</strong>
+          <p>
+            一个小小的入口页。前台放文字和链接，后台放 dashboard、监控和一堆还活着的小鸡。
+          </p>
+        </aside>
+      </section>
+
+      <section id="sites" aria-labelledby="sites-title">
+        <div class="section-title">
+          <h2 id="sites-title">子站入口</h2>
+          <span>慢慢长出来的小宇宙</span>
+        </div>
+
+        <div class="grid">
+          <a class="card" href="https://blog.heyuspace.com">
+            <div class="card-top">
+              <strong>Blog</strong>
+              <span class="tag">writing</span>
+            </div>
+            <span class="description">文章、想法和长期记录。适合放慢一点写。</span>
+          </a>
+
+          <a class="card" href="https://notes.heyuspace.com">
+            <div class="card-top">
+              <strong>Notes</strong>
+              <span class="tag">docs</span>
+            </div>
+            <span class="description">技术笔记、配置记录、踩坑备忘。给未来的自己递纸条。</span>
+          </a>
+
+          <a class="card" href="https://dash.heyuspace.com">
+            <div class="card-top">
+              <strong>Dashboard</strong>
+              <span class="tag live">live</span>
+            </div>
+            <span class="description">VPS、节点和服务状态总览。小鸡驾驶舱。</span>
+          </a>
+
+          <a class="card" href="https://status.heyuspace.com">
+            <div class="card-top">
+              <strong>Status</strong>
+              <span class="tag">uptime</span>
+            </div>
+            <span class="description">服务在线状态、可用性和故障提示。</span>
+          </a>
+
+          <a class="card" href="https://digvps.heyuspace.com">
+            <div class="card-top">
+              <strong>DigVPS Monitor</strong>
+              <span class="tag">tools</span>
+            </div>
+            <span class="description">低价 VPS 库存、价格和地区筛选。赛博小鸡雷达。</span>
+          </a>
+
+          <a class="card" href="mailto:hi@heyuspace.com">
+            <div class="card-top">
+              <strong>Contact</strong>
+              <span class="tag">mail</span>
+            </div>
+            <span class="description">给我发邮件，或者以后换成更正式的联系页面。</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© 2026 何欲 · Heyu Space</span>
+      <a href="https://github.com/heyu6521/heyuspace-home">GitHub</a>
+    </footer>
+  </div>
+</body>
+</html>
