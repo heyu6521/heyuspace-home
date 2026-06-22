@@ -275,6 +275,41 @@
       font-size: 14px;
     }
 
+    .changelog {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .timeline {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li {
+      display: grid;
+      grid-template-columns: 142px minmax(0, 1fr);
+      gap: 18px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline li:last-child {
+      border-bottom: 0;
+    }
+
+    .timeline time {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .timeline span {
+      color: var(--text);
+      font-size: 15px;
+    }
+
     .footer {
       display: flex;
       align-items: center;
@@ -305,6 +340,7 @@
       .nav-links { flex-wrap: wrap; }
       .grid { grid-template-columns: 1fr; }
       .card { min-height: 148px; }
+      .timeline li { grid-template-columns: 1fr; gap: 4px; }
       .footer { align-items: flex-start; flex-direction: column; }
     }
   </style>
@@ -316,6 +352,7 @@
       <div class="nav-links">
         <a href="#now">Now</a>
         <a href="#sites">Sites</a>
+        <a href="#changelog">Changelog</a>
         <a href="https://notes.heyuspace.com">知行札记</a>
       </div>
     </nav>
@@ -420,6 +457,31 @@
             </div>
             <span class="description">低价 VPS 库存、价格和地区筛选。赛博小鸡雷达，等后端接上。</span>
           </div>
+        </div>
+      </section>
+
+      <section id="changelog" aria-labelledby="changelog-title">
+        <div class="section-title">
+          <div>
+            <h2 id="changelog-title">Changelog</h2>
+            <span>小院施工记录</span>
+          </div>
+        </div>
+        <div class="panel changelog">
+          <ul class="timeline">
+            <li>
+              <time datetime="2026-06-22">2026-06-22</time>
+              <span>heyuspace.com 主入口上线，并绑定 www 备用入口。</span>
+            </li>
+            <li>
+              <time datetime="2026-06-22">2026-06-22</time>
+              <span>接入 notes.heyuspace.com，把「知行札记」放进个人空间。</span>
+            </li>
+            <li>
+              <time datetime="2026-06-22">2026-06-22</time>
+              <span>首页增加 Now、关于“何欲”、Writing & Notes、Tiny Infra 和 soon 状态。</span>
+            </li>
+          </ul>
         </div>
       </section>
     </main>
