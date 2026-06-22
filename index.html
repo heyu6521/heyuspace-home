@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="何欲的个人空间入口：博客、笔记、VPS dashboard、状态页和小工具。" />
+  <meta name="description" content="何欲的个人空间入口：知行札记、VPS dashboard、状态页和小工具。" />
   <title>何欲 · Heyu Space</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <style>
     :root {
       --bg: #f7f3ea;
@@ -17,9 +18,14 @@
       --accent: #111827;
       --accent-soft: #e9dfcd;
       --green: #177245;
+      --green-bg: rgba(23, 114, 69, 0.11);
+      --amber: #7a5617;
+      --amber-bg: rgba(173, 122, 31, 0.12);
     }
 
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -90,7 +96,7 @@
       grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
       align-items: end;
       gap: 48px;
-      margin-bottom: 44px;
+      margin-bottom: 28px;
     }
 
     .eyebrow {
@@ -122,7 +128,7 @@
       font-size: 17px;
     }
 
-    .side-note {
+    .panel {
       padding: 24px;
       border: 1px solid var(--line);
       border-radius: 28px;
@@ -131,13 +137,13 @@
       backdrop-filter: blur(14px);
     }
 
-    .side-note strong {
+    .panel strong {
       display: block;
       margin-bottom: 8px;
       font-size: 18px;
     }
 
-    .side-note p {
+    .panel p {
       margin: 0;
       color: var(--muted);
       font-size: 14px;
@@ -145,7 +151,7 @@
 
     .section-title {
       display: flex;
-      align-items: center;
+      align-items: end;
       justify-content: space-between;
       gap: 16px;
       margin: 42px 0 16px;
@@ -153,13 +159,47 @@
 
     .section-title h2 {
       margin: 0;
-      font-size: 22px;
+      font-size: 24px;
       letter-spacing: -0.04em;
     }
 
     .section-title span {
       color: var(--muted);
       font-size: 14px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mini-list li {
+      display: flex;
+      gap: 9px;
+      align-items: baseline;
+    }
+
+    .mini-list li::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 6px;
+      height: 6px;
+      margin-top: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      opacity: 0.55;
     }
 
     .grid {
@@ -184,11 +224,15 @@
       backdrop-filter: blur(14px);
     }
 
-    .card:hover {
+    a.card:hover {
       transform: translateY(-4px);
       border-color: rgba(17, 24, 39, 0.26);
       background: var(--card-strong);
       box-shadow: 0 18px 54px rgba(38, 45, 56, 0.12);
+    }
+
+    .card.is-soon {
+      color: rgba(31, 41, 51, 0.72);
     }
 
     .card-top {
@@ -216,8 +260,13 @@
     }
 
     .tag.live {
-      background: rgba(23, 114, 69, 0.11);
+      background: var(--green-bg);
       color: var(--green);
+    }
+
+    .tag.soon {
+      background: var(--amber-bg);
+      color: var(--amber);
     }
 
     .description {
@@ -247,6 +296,7 @@
       .nav { margin-bottom: 52px; }
       .hero { grid-template-columns: 1fr; gap: 26px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .info-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 620px) {
@@ -264,9 +314,9 @@
     <nav class="nav" aria-label="主导航">
       <div class="brand"><span class="brand-mark" aria-hidden="true"></span> Heyu Space</div>
       <div class="nav-links">
+        <a href="#now">Now</a>
         <a href="#sites">Sites</a>
-        <a href="https://blog.heyuspace.com">Blog</a>
-        <a href="https://dash.heyuspace.com">Dashboard</a>
+        <a href="https://notes.heyuspace.com">知行札记</a>
       </div>
     </nav>
 
@@ -281,7 +331,7 @@
             “何欲”是一个提醒：在匆忙之前，先问自己到底想要什么。
           </p>
         </div>
-        <aside class="side-note">
+        <aside class="panel">
           <strong>heyuspace.com</strong>
           <p>
             一个小小的入口页。前台放文字和链接，后台放 dashboard、监控和一堆还活着的小鸡。
@@ -289,67 +339,94 @@
         </aside>
       </section>
 
+      <section id="now" class="info-grid" aria-label="当前状态和何欲说明">
+        <article class="panel">
+          <strong>Now</strong>
+          <p>最近在整理个人主页、知行札记和 VPS 小鸡状态页。先把门厅搭起来，再慢慢长出书房、工具间和控制台。</p>
+          <ul class="mini-list">
+            <li>知行札记已经接入 notes.heyuspace.com</li>
+            <li>主页用 Cloudflare Pages 自动部署</li>
+            <li>后续补状态页和 DigVPS 小雷达</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <strong>关于“何欲”</strong>
+          <p>取自《归去来兮辞》：“胡为乎遑遑欲何之”。它不是答案，更像一个提醒：在匆忙、折腾、选择和迁移之前，先问一句，我到底想要什么。</p>
+        </article>
+      </section>
+
       <section id="sites" aria-labelledby="sites-title">
         <div class="section-title">
-          <h2 id="sites-title">子站入口</h2>
-          <span>慢慢长出来的小宇宙</span>
+          <div>
+            <h2 id="sites-title">Writing & Notes</h2>
+            <span>书房先亮起来</span>
+          </div>
         </div>
 
         <div class="grid">
-          <a class="card" href="https://blog.heyuspace.com">
-            <div class="card-top">
-              <strong>Blog</strong>
-              <span class="tag">writing</span>
-            </div>
-            <span class="description">文章、想法和长期记录。适合放慢一点写。</span>
-          </a>
-
           <a class="card" href="https://notes.heyuspace.com">
             <div class="card-top">
-              <strong>Notes</strong>
-              <span class="tag">docs</span>
+              <strong>知行札记</strong>
+              <span class="tag live">active</span>
             </div>
-            <span class="description">技术笔记、配置记录、踩坑备忘。给未来的自己递纸条。</span>
+            <span class="description">芯片协议、SystemVerilog、工程实践和长期学习笔记。</span>
           </a>
 
+          <div class="card is-soon">
+            <div class="card-top">
+              <strong>Blog</strong>
+              <span class="tag soon">soon</span>
+            </div>
+            <span class="description">以后放更随笔、更个人表达的文章。现在先让笔记站稳定运行。</span>
+          </div>
+
+          <a class="card" href="https://github.com/heyu6521/heyuspace-home">
+            <div class="card-top">
+              <strong>GitHub</strong>
+              <span class="tag live">active</span>
+            </div>
+            <span class="description">主页源码和后续改动记录。这个小院子的施工日志。</span>
+          </a>
+        </div>
+
+        <div class="section-title">
+          <div>
+            <h2>Tiny Infra</h2>
+            <span>小鸡、监控和工具间</span>
+          </div>
+        </div>
+
+        <div class="grid">
           <a class="card" href="https://dash.heyuspace.com">
             <div class="card-top">
               <strong>Dashboard</strong>
-              <span class="tag live">live</span>
+              <span class="tag live">active</span>
             </div>
             <span class="description">VPS、节点和服务状态总览。小鸡驾驶舱。</span>
           </a>
 
-          <a class="card" href="https://status.heyuspace.com">
+          <div class="card is-soon">
             <div class="card-top">
               <strong>Status</strong>
-              <span class="tag">uptime</span>
+              <span class="tag soon">soon</span>
             </div>
-            <span class="description">服务在线状态、可用性和故障提示。</span>
-          </a>
+            <span class="description">公开服务在线状态、可用性和故障提示。先占坑，不假装已经好了。</span>
+          </div>
 
-          <a class="card" href="https://digvps.heyuspace.com">
+          <div class="card is-soon">
             <div class="card-top">
               <strong>DigVPS Monitor</strong>
-              <span class="tag">tools</span>
+              <span class="tag soon">soon</span>
             </div>
-            <span class="description">低价 VPS 库存、价格和地区筛选。赛博小鸡雷达。</span>
-          </a>
-
-          <a class="card" href="mailto:hi@heyuspace.com">
-            <div class="card-top">
-              <strong>Contact</strong>
-              <span class="tag">mail</span>
-            </div>
-            <span class="description">给我发邮件，或者以后换成更正式的联系页面。</span>
-          </a>
+            <span class="description">低价 VPS 库存、价格和地区筛选。赛博小鸡雷达，等后端接上。</span>
+          </div>
         </div>
       </section>
     </main>
 
     <footer class="footer">
       <span>© 2026 何欲 · Heyu Space</span>
-      <a href="https://github.com/heyu6521/heyuspace-home">GitHub</a>
+      <span>先问何欲，再开新坑。</span>
     </footer>
   </div>
 </body>
