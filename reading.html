@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="何欲的读书札记：按书和章节持续更新个人读书解读。第一部书从《红楼梦》开始。" />
+  <title>读书札记 · 何欲</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --bg: #f7f3ea;
+      --card: rgba(255, 255, 255, 0.78);
+      --card-strong: rgba(255, 255, 255, 0.94);
+      --text: #1f2933;
+      --muted: #657184;
+      --line: rgba(31, 41, 51, 0.12);
+      --shadow: 0 24px 80px rgba(38, 45, 56, 0.11);
+      --accent: #111827;
+      --accent-soft: #e9dfcd;
+      --green: #177245;
+      --green-bg: rgba(23, 114, 69, 0.11);
+      --amber: #7a5617;
+      --amber-bg: rgba(173, 122, 31, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 8% 6%, rgba(255, 226, 147, 0.62), transparent 32%),
+        radial-gradient(circle at 90% 16%, rgba(198, 223, 255, 0.66), transparent 34%),
+        radial-gradient(circle at 72% 88%, rgba(209, 244, 221, 0.55), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font: 16px/1.75 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 34px 0 56px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 7px rgba(17, 24, 39, 0.08);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      border-bottom-color: currentColor;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      align-items: end;
+      gap: 48px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 14px;
+      font-size: clamp(48px, 9vw, 112px);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+    }
+
+    .quote {
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 750;
+      letter-spacing: -0.04em;
+    }
+
+    .panel {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .panel strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 42px 0 16px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+    }
+
+    .section-title span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .book-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .book-meta {
+      display: grid;
+      gap: 10px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .book-meta li {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 3px 9px;
+      background: var(--accent-soft);
+      color: #6f5937;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .tag.live {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-top: 18px;
+    }
+
+    .toc {
+      position: sticky;
+      top: 18px;
+      max-height: calc(100vh - 36px);
+      overflow: auto;
+    }
+
+    .toc h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .toc-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .toc-list a {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 11px;
+      border-radius: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px solid rgba(31, 41, 51, 0.07);
+      font-size: 14px;
+    }
+
+    .toc-list a:hover {
+      color: var(--text);
+      background: var(--card-strong);
+    }
+
+    .toc-list .done {
+      color: var(--green);
+      font-size: 12px;
+    }
+
+    .chapters {
+      display: grid;
+      gap: 14px;
+    }
+
+    .chapter {
+      scroll-margin-top: 18px;
+    }
+
+    .chapter-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .chapter h3 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .chapter .date {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .chapter p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .thoughts {
+      display: grid;
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .thoughts li {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(31, 41, 51, 0.07);
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 44px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      border-bottom: 1px solid rgba(101, 113, 132, 0.45);
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .book-card,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page { width: min(100% - 28px, 1120px); padding-top: 24px; }
+      .nav { align-items: flex-start; flex-direction: column; gap: 12px; margin-bottom: 52px; }
+      .nav-links { flex-wrap: wrap; }
+      .chapter-head { flex-direction: column; }
+      .footer { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span> Heyu Space</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="https://notes.heyuspace.com">知行札记</a>
+        <a href="#hongloumeng">红楼梦</a>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Reading notes / personal interpretation</div>
+          <h1>读书札记</h1>
+          <p class="quote">每天读一点，慢慢把书读成自己的路标</p>
+        </div>
+        <aside class="panel">
+          <strong>怎么更新</strong>
+          <p>后续你告诉我第几回、回目名字、内容大意和你的个人解读，我就把它整理成章节笔记发布到这里。</p>
+        </aside>
+      </section>
+
+      <section id="hongloumeng" aria-labelledby="hongloumeng-title">
+        <div class="section-title">
+          <div>
+            <h2 id="hongloumeng-title">第一部书：《红楼梦》</h2>
+            <span>按回整理，持续更新</span>
+          </div>
+          <span class="tag live">active</span>
+        </div>
+
+        <div class="book-card">
+          <article class="panel">
+            <strong>红楼梦读书札记</strong>
+            <p>这里不做原文搬运，主要记录每回的内容大意、人物关系、关键细节和你的个人理解。读到哪里，就把哪里点亮。</p>
+          </article>
+          <aside class="panel">
+            <strong>更新格式</strong>
+            <ul class="book-meta">
+              <li><span>1.</span><span>第几回 / 第几章</span></li>
+              <li><span>2.</span><span>回目名字或你想用的标题</span></li>
+              <li><span>3.</span><span>内容大意、人物、你的解读</span></li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="layout">
+          <aside class="panel toc" aria-label="红楼梦目录">
+            <h3>目录</h3>
+            <ol class="toc-list" id="toc-list"></ol>
+          </aside>
+          <div class="chapters" id="chapters"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© 2026 何欲 · Reading Notes</span>
+      <a href="/">返回 Heyu Space</a>
+    </footer>
+  </div>
+
+  <script>
+    const totalChapters = 120;
+
+    const noteOverrides = {
+      // 示例格式，后续更新时只需要补对应章节：
+      // 1: {
+      //   title: "甄士隐梦幻识通灵 贾雨村风尘怀闺秀",
+      //   date: "2026-06-30",
+      //   summary: "这里写本回内容大意。",
+      //   thoughts: ["这里写你的个人解读。"]
+      // }
+    };
+
+    const notes = Array.from({ length: totalChapters }, (_, index) => {
+      const chapter = index + 1;
+      const override = noteOverrides[chapter] || {};
+      return {
+        chapter,
+        title: override.title || "待补标题",
+        date: override.date || "待更新",
+        summary: override.summary || "后续会补充本回名称、内容大意和个人解读。",
+        thoughts: override.thoughts || [],
+        done: Boolean(override.summary)
+      };
+    });
+
+    const toc = document.getElementById("toc-list");
+    const chapters = document.getElementById("chapters");
+
+    for (const note of notes) {
+      const tocItem = document.createElement("li");
+      const tocLink = document.createElement("a");
+      tocLink.href = `#chapter-${String(note.chapter).padStart(3, "0")}`;
+      tocLink.innerHTML = `<span>第 ${note.chapter} 回</span><span class="${note.done ? "done" : ""}">${note.done ? "已更新" : "待更新"}</span>`;
+      tocItem.appendChild(tocLink);
+      toc.appendChild(tocItem);
+
+      const article = document.createElement("article");
+      article.className = "panel chapter";
+      article.id = `chapter-${String(note.chapter).padStart(3, "0")}`;
+
+      const thoughtsHtml = note.thoughts.length
+        ? `<ul class="thoughts">${note.thoughts.map(item => `<li>${item}</li>`).join("")}</ul>`
+        : "";
+
+      article.innerHTML = `
+        <div class="chapter-head">
+          <h3>第 ${note.chapter} 回 · ${note.title}</h3>
+          <span class="date">${note.date}</span>
+        </div>
+        <p>${note.summary}</p>
+        ${thoughtsHtml}
+      `;
+      chapters.appendChild(article);
+    }
+  </script>
+</body>
+</html>
