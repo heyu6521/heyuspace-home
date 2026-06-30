@@ -9,18 +9,16 @@
   <style>
     :root {
       --bg: #f7f3ea;
-      --card: rgba(255, 255, 255, 0.78);
-      --card-strong: rgba(255, 255, 255, 0.94);
+      --card: rgba(255, 255, 255, 0.84);
+      --card-strong: rgba(255, 255, 255, 0.96);
       --text: #1f2933;
       --muted: #657184;
       --line: rgba(31, 41, 51, 0.12);
-      --shadow: 0 24px 80px rgba(38, 45, 56, 0.11);
+      --shadow: 0 10px 34px rgba(38, 45, 56, 0.08);
       --accent: #111827;
       --accent-soft: #e9dfcd;
       --green: #177245;
       --green-bg: rgba(23, 114, 69, 0.11);
-      --amber: #7a5617;
-      --amber-bg: rgba(173, 122, 31, 0.12);
     }
 
     * { box-sizing: border-box; }
@@ -31,9 +29,8 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(circle at 8% 6%, rgba(255, 226, 147, 0.62), transparent 32%),
-        radial-gradient(circle at 90% 16%, rgba(198, 223, 255, 0.66), transparent 34%),
-        radial-gradient(circle at 72% 88%, rgba(209, 244, 221, 0.55), transparent 34%),
+        radial-gradient(circle at 8% 6%, rgba(255, 226, 147, 0.45), transparent 28%),
+        radial-gradient(circle at 90% 16%, rgba(198, 223, 255, 0.48), transparent 30%),
         var(--bg);
       color: var(--text);
       font: 16px/1.75 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
@@ -125,10 +122,9 @@
     .panel {
       padding: 24px;
       border: 1px solid var(--line);
-      border-radius: 28px;
+      border-radius: 24px;
       background: var(--card);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
     }
 
     .panel strong {
@@ -223,21 +219,22 @@
 
     .toc-list {
       display: grid;
-      gap: 8px;
+      gap: 6px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
-    .toc-list a {
+    .toc-list a,
+    .toc-list span {
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      padding: 9px 11px;
-      border-radius: 14px;
+      padding: 8px 10px;
+      border-radius: 12px;
       color: var(--muted);
       text-decoration: none;
-      background: rgba(255, 255, 255, 0.52);
+      background: rgba(255, 255, 255, 0.56);
       border: 1px solid rgba(31, 41, 51, 0.07);
       font-size: 14px;
     }
@@ -249,6 +246,11 @@
 
     .toc-list .done {
       color: var(--green);
+      font-size: 12px;
+    }
+
+    .toc-list .pending {
+      color: rgba(101, 113, 132, 0.65);
       font-size: 12px;
     }
 
@@ -298,10 +300,17 @@
     .thoughts li {
       padding: 12px 14px;
       border-radius: 16px;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.58);
       border: 1px solid rgba(31, 41, 51, 0.07);
       color: var(--text);
       font-size: 15px;
+    }
+
+    .empty-state {
+      min-height: 280px;
+      display: grid;
+      align-content: center;
+      gap: 10px;
     }
 
     .footer {
@@ -411,7 +420,7 @@
     const totalChapters = 120;
 
     const noteOverrides = {
-      // 示例格式，后续更新时只需要补对应章节：
+      // 后续更新时只补对应章节，例如：
       // 1: {
       //   title: "甄士隐梦幻识通灵 贾雨村风尘怀闺秀",
       //   date: "2026-06-30",
@@ -420,47 +429,55 @@
       // }
     };
 
-    const notes = Array.from({ length: totalChapters }, (_, index) => {
-      const chapter = index + 1;
-      const override = noteOverrides[chapter] || {};
-      return {
-        chapter,
-        title: override.title || "待补标题",
-        date: override.date || "待更新",
-        summary: override.summary || "后续会补充本回名称、内容大意和个人解读。",
-        thoughts: override.thoughts || [],
-        done: Boolean(override.summary)
-      };
-    });
-
     const toc = document.getElementById("toc-list");
     const chapters = document.getElementById("chapters");
+    const updatedChapters = Object.keys(noteOverrides).map(Number).sort((a, b) => a - b);
 
-    for (const note of notes) {
+    for (let chapter = 1; chapter <= totalChapters; chapter += 1) {
+      const override = noteOverrides[chapter];
       const tocItem = document.createElement("li");
-      const tocLink = document.createElement("a");
-      tocLink.href = `#chapter-${String(note.chapter).padStart(3, "0")}`;
-      tocLink.innerHTML = `<span>第 ${note.chapter} 回</span><span class="${note.done ? "done" : ""}">${note.done ? "已更新" : "待更新"}</span>`;
-      tocItem.appendChild(tocLink);
+
+      if (override) {
+        const tocLink = document.createElement("a");
+        tocLink.href = `#chapter-${String(chapter).padStart(3, "0")}`;
+        tocLink.innerHTML = `<span>第 ${chapter} 回</span><span class="done">已更新</span>`;
+        tocItem.appendChild(tocLink);
+      } else {
+        const pending = document.createElement("span");
+        pending.innerHTML = `<span>第 ${chapter} 回</span><span class="pending">待更新</span>`;
+        tocItem.appendChild(pending);
+      }
+
       toc.appendChild(tocItem);
+    }
 
-      const article = document.createElement("article");
-      article.className = "panel chapter";
-      article.id = `chapter-${String(note.chapter).padStart(3, "0")}`;
-
-      const thoughtsHtml = note.thoughts.length
-        ? `<ul class="thoughts">${note.thoughts.map(item => `<li>${item}</li>`).join("")}</ul>`
-        : "";
-
-      article.innerHTML = `
-        <div class="chapter-head">
-          <h3>第 ${note.chapter} 回 · ${note.title}</h3>
-          <span class="date">${note.date}</span>
-        </div>
-        <p>${note.summary}</p>
-        ${thoughtsHtml}
+    if (!updatedChapters.length) {
+      chapters.innerHTML = `
+        <article class="panel empty-state">
+          <strong>还没有开始写正文</strong>
+          <p>目录已经搭好。等你发来《红楼梦》的第一回内容大意和个人解读，我会把对应章节点亮。</p>
+        </article>
       `;
-      chapters.appendChild(article);
+    } else {
+      for (const chapter of updatedChapters) {
+        const note = noteOverrides[chapter];
+        const thoughtsHtml = note.thoughts && note.thoughts.length
+          ? `<ul class="thoughts">${note.thoughts.map(item => `<li>${item}</li>`).join("")}</ul>`
+          : "";
+
+        const article = document.createElement("article");
+        article.className = "panel chapter";
+        article.id = `chapter-${String(chapter).padStart(3, "0")}`;
+        article.innerHTML = `
+          <div class="chapter-head">
+            <h3>第 ${chapter} 回 · ${note.title}</h3>
+            <span class="date">${note.date}</span>
+          </div>
+          <p>${note.summary}</p>
+          ${thoughtsHtml}
+        `;
+        chapters.appendChild(article);
+      }
     }
   </script>
 </body>
