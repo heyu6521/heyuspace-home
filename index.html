@@ -6,6 +6,11 @@
   <meta name="description" content="何欲的个人空间入口：读书札记、知行札记、VPS dashboard、状态页和小工具。" />
   <title>何欲 · Heyu Space</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script>
+    if (location.hostname === "reading.heyuspace.com" && (location.pathname === "/" || location.pathname === "/index.html")) {
+      location.replace("/reading.html");
+    }
+  </script>
   <style>
     :root {
       --bg: #f7f3ea;
@@ -342,7 +347,7 @@
         <a href="#now">Now</a>
         <a href="#sites">Sites</a>
         <a href="#changelog">Changelog</a>
-        <a href="/reading.html">读书札记</a>
+        <a href="https://reading.heyuspace.com">读书札记</a>
         <a href="https://notes.heyuspace.com">知行札记</a>
       </div>
     </nav>
@@ -387,7 +392,7 @@
         </div>
 
         <div class="grid">
-          <a class="card" href="/reading.html">
+          <a class="card" href="https://reading.heyuspace.com">
             <div class="card-top">
               <strong>读书札记</strong>
               <span class="tag live">active</span>
@@ -473,7 +478,7 @@
             </li>
             <li>
               <time datetime="2026-06-22">2026-06-22</time>
-              <span>新增读书札记页面，第一部书从《红楼梦》开始。</span>
+              <span>新增读书札记页面，第一部书从《红楼梦》开始，并预留 reading.heyuspace.com。</span>
             </li>
             <li>
               <time datetime="2026-06-22">2026-06-22</time>
