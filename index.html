@@ -22,8 +22,6 @@
       --shadow: 0 10px 32px rgba(38, 45, 56, 0.08);
       --accent: #111827;
       --accent-soft: #e9dfcd;
-      --blue: #0c63ff;
-      --cyan: #10d5ff;
       --green: #177245;
       --green-bg: rgba(23, 114, 69, 0.11);
       --amber: #7a5617;
@@ -72,12 +70,11 @@
     }
 
     .brand-mark {
-      position: relative;
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      box-shadow: 0 0 0 7px rgba(12, 99, 255, 0.08), 0 0 20px rgba(16, 213, 255, 0.42);
+      background: var(--accent);
+      box-shadow: 0 0 0 7px rgba(17, 24, 39, 0.08);
     }
 
     .nav-links {
@@ -146,23 +143,6 @@
       margin: 0;
       color: var(--muted);
       font-size: 14px;
-    }
-
-    .logo-panel {
-      overflow: hidden;
-      background:
-        linear-gradient(135deg, rgba(12, 99, 255, 0.09), rgba(16, 213, 255, 0.07) 42%, transparent 72%),
-        var(--card-strong);
-    }
-
-    .site-logo {
-      display: block;
-      width: 100%;
-      max-width: 430px;
-      margin: -4px auto 18px;
-      border-radius: 18px;
-      background: #fff;
-      box-shadow: 0 10px 30px rgba(12, 48, 92, 0.08);
     }
 
     .section-title {
@@ -346,7 +326,6 @@
       .hero { grid-template-columns: 1fr; gap: 26px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .info-grid { grid-template-columns: 1fr; }
-      .site-logo { max-width: 460px; }
     }
 
     @media (max-width: 620px) {
@@ -380,8 +359,7 @@
           <h1>何欲</h1>
           <p class="quote">胡为乎遑遑欲何之</p>
         </div>
-        <aside class="panel logo-panel">
-          <img class="site-logo" src="/assets/heyu-space-logo-clean.svg" alt="Heyu Space 何欲 标志" width="900" height="359" />
+        <aside class="panel">
           <strong>heyuspace.com</strong>
           <p>
             一个小小的入口页。前台放文字和链接，后台放 dashboard、监控和一堆还活着的小鸡。
@@ -482,10 +460,6 @@
         </div>
         <div class="panel changelog">
           <ul class="timeline">
-            <li>
-              <time datetime="2026-07-02">2026-07-02</time>
-              <span>首页加入 Heyu Space 科技风品牌标志。</span>
-            </li>
             <li>
               <time datetime="2026-06-22">2026-06-22</time>
               <span>heyuspace.com 主入口上线，并绑定 www 备用入口。</span>
